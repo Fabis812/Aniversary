@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F. Ledesma & S. García ❤️</title>
+
+<!-- FUENTES ELEGANTES -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- LIBRERÍA DE CONFETI PARA EL REGALO -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: radial-gradient(circle at center, #2a0813 0%, #120207 70%, #050002 100%);
+    color: #fceade;
+}
+
+/* FONDO CÁLIDO CON EFECTO DE LUZ DE VELA PARPADEANTE */
+.candle-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(212, 140, 55, 0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 2;
+    animation: flicker 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.6; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* FONDO Y ELEMENTOS FLOTANTES */
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    animation: glowPulse 8s infinite alternate ease-in-out;
+}
+
+.glow.one { background: #d4af37; left: -100px; top: -100px; }
+.glow.two { background: #961c36; right: -100px; bottom: -100px; animation-delay: 3s; }
+
+@keyframes glowPulse {
+    from { transform: scale(1); opacity: 0.15; }
+    to { transform: scale(1.2); opacity: 0.25; }
+}
+
+/* CORAZONES Y PÉTALOS FLOTANTES */
+.floating-heart {
+    position: absolute;
+    bottom: -50px;
+    color: rgba(212, 175, 55, 0.4);
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    animation: floatHeart linear infinite;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+    15% { opacity: 0.8; }
+    85% { opacity: 0.8; }
+    100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+.falling-petal {
+    position: absolute;
+    top: -30px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 200, 210, 0.6) 0%, rgba(212, 175, 55, 0.3) 100%);
+    border-radius: 15px 0 15px 0;
+    pointer-events: none;
+    animation: fallPetal linear infinite;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.2);
+}
+
+@keyframes fallPetal {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(110vh) translateX(80px) rotate(450deg); opacity: 0; }
+}
+
+.star-dust {
+    position: absolute;
+    background: #d4af37;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+    animation: twinkleDust ease-in-out infinite alternate;
+}
+
+@keyframes twinkleDust {
+    0% { opacity: 0.1; transform: scale(0.6); }
+    100% { opacity: 0.8; transform: scale(1.3); }
+}
+
+/* BOTÓN FLOTANTE DE CONTROL DE MÚSICA */
+.audio-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 150;
+    background: rgba(33, 3, 9, 0.75);
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.audio-control:hover {
+    transform: scale(1.1);
+    background: #d4af37;
+    color: #210309;
+}
+
+/* INTERACCIÓN MÁGICA DE TOQUE */
+.interactive-item {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99;
+    user-select: none;
+    animation: burstFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.interactive-heart {
+    color: #ffd700;
+    font-size: 16px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.interactive-petal {
+    width: 14px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 192, 203, 0.9) 0%, rgba(212, 175, 55, 0.8) 100%);
+    border-radius: 15px 0 15px 0;
+}
+
+@keyframes burstFade {
+    0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.4) rotate(var(--rot)); }
+}
+
+/* ESCENA PRINCIPAL */
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    perspective: 1200px;
+}
+
+/* SOBRE REALISTA 3D */
+.envelope-wrapper {
+    position: relative;
+    width: min(92vw, 430px);
+    height: 295px;
+    cursor: pointer;
+    animation: entrance 1.5s ease-out forwards;
+}
+
+@keyframes entrance {
+    0% { opacity: 0; transform: translateY(80px) scale(0.85); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.shadow {
+    position: absolute;
+    width: 90%;
+    height: 25px;
+    left: 5%;
+    bottom: -30px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%);
+    border-radius: 50%;
+    transition: all 0.8s ease;
+}
+
+.envelope {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #420b15 0%, #210309 100%);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.75), inset 0 1px 1px rgba(255,255,255,0.25);
+    z-index: 2;
+    overflow: hidden;
+}
+
+.fold-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #1d0308, #2a060d);
+    z-index: 1;
+}
+
+.fold-left-right {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.fold-left-right::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, #3d0812 0%, #250309 100%);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.fold-left-right::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(-135deg, #380710 0%, #200207 100%);
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.fold-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 52%;
+    background: linear-gradient(to top, #480c17 0%, #2d050c 100%);
+    clip-path: polygon(0 100%, 50% 15%, 100% 100%);
+    z-index: 7;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+.flap-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flap-front {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 58%;
+    background: linear-gradient(180deg, #590f1d 0%, #3d0812 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.flap-front::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-top: 1px solid rgba(212, 175, 55, 0.6);
+    clip-path: polygon(0 0, 100% 0, 50% 98%);
+}
+
+/* SELLO DE CERA PERSONALIZADO DE: F. LEDESMA PARA: S. GARCÍA */
+.seal-top {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -100%);
+    width: 60px;
+    height: 30px;
+    background: radial-gradient(circle at 35% 35%, #ad1f34 0%, #700a18 70%, #40030c 100%);
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 2px;
+    z-index: 10;
+}
+
+.seal-bottom {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, 0);
+    width: 60px;
+    height: 30px;
+    background: radial-gradient(circle at 35% 10%, #ad1f34 0%, #700a18 70%, #40030c 100%);
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2px;
+    z-index: 8;
+}
+
+.seal-text {
+    color: #d4af37;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    font-family: 'Georgia', serif;
+}
+
+/* CARTA ESPACIOSA */
+.letter {
+    position: absolute;
+    width: 90%;
+    height: 275px;
+    left: 5%;
+    bottom: 10px;
+    background: #fdfaf5;
+    background-image: 
+        linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(243,233,215,0.7) 100%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 0%, rgba(210,190,160,0.15) 100%);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(0);
+    transition: transform 1s cubic-bezier(0.17, 0.67, 0.3, 1.2), opacity 0.5s ease;
+    overflow: hidden;
+}
+
+.letter::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px dashed rgba(180, 140, 70, 0.35);
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* MEMBRETE SUPERIOR DE: F. LEDESMA PARA: S. GARCÍA */
+.letter-header-names {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #8c6a27;
+    font-weight: 600;
+    z-index: 5;
+    text-transform: uppercase;
+}
+
+.sakura-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.18;
+}
+
+.sakura-bg svg { width: 100%; height: 100%; }
+
+.letter-page {
+    position: absolute;
+    inset: 0;
+    padding: 24px 20px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    z-index: 3;
+}
+
+.letter-page.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.letter-page h3 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(24px, 5.5vw, 32px);
+    color: #57121c;
+    margin-bottom: 6px;
+    font-weight: normal;
+}
+
+.letter-page p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(14px, 3.8vw, 15.5px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: #23120e;
+}
+
+.letter-page .page-number {
+    position: absolute;
+    bottom: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #a38f78;
+    letter-spacing: 2px;
+}
+
+/* FLECHA DISCRETA PARA RETROCEDER PAGINA */
+.prev-arrow {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    color: #57121c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    z-index: 12;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.prev-arrow:hover {
+    background: rgba(212, 175, 55, 0.85);
+    color: #ffffff;
+}
+
+.open .prev-arrow.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* CONTADOR DE TIEMPO */
+.counter-box {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-top: 8px;
+    box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.counter-number {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    color: #8c2435;
+    line-height: 1.2;
+}
+
+.counter-label {
+    font-size: 12px;
+    color: #57121c;
+    letter-spacing: 1px;
+}
+
+/* MARIPOSA FLOTANTE */
+.butterfly {
+    position: absolute;
+    font-size: 22px;
+    animation: fly 3s ease-in-out infinite alternate;
+    cursor: pointer;
+    filter: drop-shadow(0 2px 5px rgba(212, 175, 55, 0.5));
+}
+
+@keyframes fly {
+    0% { transform: translate(-10px, 0) rotate(-10deg) scale(0.9); }
+    100% { transform: translate(10px, -15px) rotate(10deg) scale(1.1); }
+}
+
+/* CAJA DE REGALO INTERACTIVA */
+.gift-container {
+    margin-top: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.gift-container:hover {
+    transform: scale(1.1);
+}
+
+.gift-box {
+    font-size: 48px;
+    animation: giftBounce 1.5s infinite alternate ease-in-out;
+    filter: drop-shadow(0 4px 8px rgba(140, 36, 53, 0.4));
+}
+
+@keyframes giftBounce {
+    0% { transform: translateY(0) rotate(-3deg); }
+    100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.gift-hint {
+    font-size: 12px;
+    color: #8c2435;
+    font-weight: bold;
+    margin-top: 2px;
+    letter-spacing: 1px;
+}
+
+/* FOTOS CON ZOOM */
+.image-card {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    height: 135px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    border: 2px solid #d4af37;
+    cursor: zoom-in;
+}
+
+.image-card img { width: 100%; height: 100%; object-fit: cover; }
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+}
+
+.image-caption {
+    color: #ffffff;
+    font-size: 11.5px;
+    letter-spacing: 1px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+/* MODAL DE FOTO CON PROFUNDIDAD */
+.photo-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(8, 1, 3, 0.92);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.photo-modal.active { opacity: 1; visibility: visible; }
+
+.photo-modal img {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 20px rgba(212, 175, 55, 0.4);
+    border: 2px solid #d4af37;
+    transform: scale(0.6) translateZ(-200px);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+    object-fit: contain;
+}
+
+.photo-modal.active img { transform: scale(1) translateZ(0); }
+
+.photo-modal-caption {
+    position: absolute;
+    bottom: 30px;
+    color: #fceade;
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(24px, 5vw, 32px);
+}
+
+/* POPUP DEL MENSAJE SECRETO */
+.secret-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(25, 3, 8, 0.95);
+    border: 2px solid #d4af37;
+    padding: 25px 20px;
+    border-radius: 12px;
+    z-index: 300;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    max-width: 85vw;
+}
+
+.secret-popup.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.secret-popup h4 {
+    font-family: 'Great Vibes', cursive;
+    color: #d4af37;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.secret-popup p {
+    font-size: 15px;
+    color: #fceade;
+    line-height: 1.4;
+}
+
+/* BURBUJA MÁGICA DE CIERRE */
+.love-bubble {
+    position: absolute;
+    top: -65px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    background: rgba(253, 250, 245, 0.95);
+    border: 1.5px solid #d4af37;
+    color: #57121c;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 20px;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 50;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+}
+
+.love-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: rgba(253, 250, 245, 0.95) transparent;
+    display: block;
+    width: 0;
+}
+
+.love-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+    animation: bubbleFloat 3s infinite alternate ease-in-out;
+}
+
+@keyframes bubbleFloat {
+    0% { transform: translateX(-50%) translateY(0) scale(1); }
+    100% { transform: translateX(-50%) translateY(-6px) scale(1.03); }
+}
+
+/* PORTADA */
+.words-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    z-index: 5;
+    transition: opacity 0.4s ease;
+}
+
+.words-container.hide { opacity: 0; pointer-events: none; }
+
+.word-text.one { font-size: 13px; color: #8c6a27; letter-spacing: 2px; font-weight: 600; }
+.word-text.two { font-family: 'Great Vibes', cursive; font-size: 34px; color: #57121c; }
+.word-text.three { font-size: 13px; color: #8c2435; letter-spacing: 3px; font-weight: 600; }
+
+.tap {
+    position: absolute;
+    bottom: -55px;
+    width: 100%;
+    text-align: center;
+    color: #d4af37;
+    font-size: 15px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* ESTADO ABIERTO */
+.open .flap-wrapper { transform: rotateX(180deg); z-index: 1; }
+.open .letter { opacity: 1; transform: translateY(-200px); z-index: 10; }
+
+/* VIDEO CON TRANSICIÓN SUAVE Y DESTELLO */
+.video-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10, 1, 4, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
+    transform: scale(0.95);
+}
+
+.video-screen.show { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: scale(1);
+}
+
+.video-screen.closing {
+    opacity: 0;
+    transform: scale(1.05);
+}
+
+.video-box { width: min(380px, 90vw); text-align: center; }
+
+.video-box h2 {
+    font-family: 'Great Vibes', cursive;
+    color: #d4af37;
+    font-size: clamp(28px, 6vw, 36px);
+    margin-bottom: 12px;
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-top: 133%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; border: 0;
+}
+
+.back-button {
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+@media (max-width: 500px) {
+    .envelope-wrapper { width: 92vw; height: 280px; }
+    .letter { height: 250px; }
+    .open .letter { transform: translateY(-180px); }
+    .image-card { height: 115px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="candle-glow"></div>
+
+<!-- AUDIOS DE FONDO -->
+<audio id="backgroundMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="audio-control" id="audioBtn" onclick="toggleAudio(event)" title="Música">
+    🎵
+</div>
+
+<div class="background" id="bgHearts">
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+</div>
+
+<div class="scene">
+    <div class="envelope-wrapper" id="envelope">
+        <div class="shadow"></div>
+
+        <!-- BURBUJA MÁGICA CON NOMBRE COMPLETO -->
+        <div class="love-bubble" id="loveBubble">
+            Te amo con toda mi alma, Salma Neftalí García Pérez ❤️
+        </div>
+
+        <div class="letter">
+            
+            <!-- FLECHA DE RETROCEDER -->
+            <div class="prev-arrow" id="prevArrow" onclick="prevPage(event)" title="Volver página anterior">❮</div>
+
+            <!-- MEMBRETE CORREGIDO DE: F. LEDESMA PARA: S. GARCÍA -->
+            <div class="letter-header-names">De: F. Ledesma &nbsp;•&nbsp; Para: S. García</div>
+
+            <div class="sakura-bg">
+                <svg viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M-10 -10 C 60 20, 100 80, 160 70 M 80 35 C 110 20, 130 10, 150 2" stroke="#8c6a27" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 120 75 C 140 90, 160 110, 175 125" stroke="#8c6a27" stroke-width="1.8" stroke-linecap="round"/>
+                    <g fill="none" stroke="#8c6a27" stroke-width="1.2">
+                        <circle cx="160" cy="70" r="8"/><circle cx="160" cy="70" r="3"/>
+                        <circle cx="150" cy="2" r="7"/><circle cx="175" cy="125" r="9"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- PORTADA DE LA CARTA -->
+            <div class="words-container" id="words">
+                <div class="word-text one">DE: F. LEDESMA — PARA: S. GARCÍA</div>
+                <div class="word-text two">Feliz Aniversario</div>
+                <div class="word-text three">TE AMO CON TODA MI ALMA ❤️</div>
+            </div>
+
+            <!-- CARTA 1 -->
+            <div class="letter-page">
+                <h3>Para ti, mi amor ❤️</h3>
+                <p>Hola mi vida, hoy celebramos nuestra historia. Gracias por llenar mi camino de sonrisas e instantes inolvidables a lo largo de este tiempo juntos.</p>
+                <div class="page-number">I / XVII</div>
+            </div>
+
+            <!-- CARTA 2 -->
+            <div class="letter-page">
+                <h3>Nuestros Días Amándonos ✨</h3>
+                <p>Desde aquel inolvidable <b>21 de septiembre de 2022</b> hemos construido un amor infinito:</p>
+                <div class="counter-box">
+                    <div class="counter-number" id="timeCounter">Calculando...</div>
+                    <div class="counter-label">de pura felicidad juntos ❤️</div>
+                </div>
+                <div class="page-number">II / XVII</div>
+            </div>
+
+            <!-- CARTA 3 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto1.jpg', 'Donde empezó la magia ✨', event)">
+                    <img src="foto1.jpg" alt="Momento juntos">
+                    <div class="image-overlay">
+                        <span class="image-caption">Donde empezó la magia ✨ (Toca para ampliar)</span>
+                    </div>
+                </div>
+                <p>Nuestros recuerdos siempre vivos en el corazón.</p>
+                <div class="page-number">III / XVII</div>
+            </div>
+
+            <!-- CARTA 4 -->
+            <div class="letter-page">
+                <h3>Nuestra Historia ✨</h3>
+                <p>Mirar atrás y ver todo lo que hemos construido me llena de orgullo. Hemos crecido juntos y superado todo tomados de la mano.</p>
+                <div class="page-number">IV / XVII</div>
+            </div>
+
+            <!-- CARTA 5 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto2.jpg', 'Tu sonrisa iluminando todo 💖', event)">
+                    <img src="foto2.jpg" alt="Sonrisas">
+                    <div class="image-overlay">
+                        <span class="image-caption">Tu sonrisa iluminando todo 💖</span>
+                    </div>
+                </div>
+                <p>Mi lugar feliz siempre será a tu lado.</p>
+                <div class="page-number">V / XVII</div>
+            </div>
+
+            <!-- CARTA 6 -->
+            <div class="letter-page">
+                <h3>Lo que amo de ti 🌹</h3>
+                <p>Amo tu sonrisa, tu mirada y la paz inconmensurable que me brindas. Enamorarme de ti ha sido el regalo más bello de mi vida.</p>
+                <div class="page-number">VI / XVII</div>
+            </div>
+
+            <!-- CARTA 7 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto3.jpg', 'Coleccionando aventuras 🌍', event)">
+                    <img src="foto3.jpg" alt="Aventuras">
+                    <div class="image-overlay">
+                        <span class="image-caption">Coleccionando aventuras 🌍</span>
+                    </div>
+                </div>
+                <p>Cualquier destino es perfecto si voy contigo.</p>
+                <div class="page-number">VII / XVII</div>
+            </div>
+
+            <!-- CARTA 8 -->
+            <div class="letter-page">
+                <h3>Gracias por tanto 🥺</h3>
+                <p>Gracias por tu paciencia, tu escucha atenta y tu apoyo incondicional. Tu amor es mi refugio permanente.</p>
+                <div class="page-number">VIII / XVII</div>
+            </div>
+
+            <!-- CARTA 9 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto4.jpg', 'Un abrazo que lo cura todo 🫂', event)">
+                    <img src="foto4.jpg" alt="Abrazos">
+                    <div class="image-overlay">
+                        <span class="image-caption">Un abrazo que lo cura todo 🫂</span>
+                    </div>
+                </div>
+                <p>La calidez de tu corazón me acompaña siempre.</p>
+                <div class="page-number">IX / XVII</div>
+            </div>
+
+            <!-- CARTA 10 -->
+            <div class="letter-page">
+                <h3>Nuestro Futuro 🥂</h3>
+                <p>Me emociona soñar con nuestro mañana, seguir creciendo juntos y construir la hermosa familia con la que siempre hemos soñado.</p>
+                <div class="page-number">X / XVII</div>
+            </div>
+
+            <!-- CARTA 11 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto5.jpg', 'Cómplices por siempre 🌹', event)">
+                    <img src="foto5.jpg" alt="Cómplices">
+                    <div class="image-overlay">
+                        <span class="image-caption">Cómplices por siempre 🌹</span>
+                    </div>
+                </div>
+                <p>Mi persona favorita y el amor de mi vida.</p>
+                <div class="page-number">XI / XVII</div>
+            </div>
+
+            <!-- CARTA 12 -->
+            <div class="letter-page">
+                <h3>Mi Cómplice Favorita ✨</h3>
+                <p>A tu lado entendí que el verdadero amor es encontrar en una sola persona a tu mejor amigo y a tu refugio ideal.</p>
+                <div class="page-number">XII / XVII</div>
+            </div>
+
+            <!-- CARTA 13 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto6.jpg', 'Instantes inolvidables 📸', event)">
+                    <img src="foto6.jpg" alt="Miradas">
+                    <div class="image-overlay">
+                        <span class="image-caption">Instantes inolvidables 📸</span>
+                    </div>
+                </div>
+                <p>Fotografías llenas de pura alma.</p>
+                <div class="page-number">XIII / XVII</div>
+            </div>
+
+            <!-- CARTA 14 -->
+            <div class="letter-page">
+                <h3>Pequeños Momentos 💖</h3>
+                <p>Cada risa compartida y cada abrazo cálido valen más que cualquier tesoro. Haces que mi vida sea maravillosa.</p>
+                <div class="page-number">XIV / XVII</div>
+            </div>
+
+            <!-- CARTA 15 -->
+            <div class="letter-page">
+                <div class="image-card" onclick="zoomPhoto('foto7.jpg', 'Un amor sin final ♾️❤️', event)">
+                    <img src="foto7.jpg" alt="Amor infinito">
+                    <div class="image-overlay">
+                        <span class="image-caption">Un amor sin final ♾️❤️</span>
+                    </div>
+                </div>
+                <p>Cada instante a tu lado es una bendición.</p>
+                <div class="page-number">XV / XVII</div>
+            </div>
+
+            <!-- CARTA 16 -->
+            <div class="letter-page">
+                <h3>Por Siempre ❤️</h3>
+                <p>Gracias por cada segundo de felicidad. Te elijo hoy, mañana y para toda la vida. Te amo con toda mi alma.</p>
+                <p style="margin-top: 10px; color: #8c6a27; font-size: 13px;">De: F. Ledesma — Para: S. García</p>
+                <div class="page-number">XVI / XVII</div>
+            </div>
+
+            <!-- CARTA 17: DESPEDIDA CON CAJA DE REGALO INTERACTIVA -->
+            <div class="letter-page">
+                <div class="butterfly" onclick="burstMagic(event)">🦋</div>
+                <p style="font-size: 14px;">Lo mejor de nuestra historia aún se está escribiendo...</p>
+                
+                <!-- CAJA DE REGALO -->
+                <div class="gift-container" onclick="openGiftBox(event)">
+                    <div class="gift-box">🎁</div>
+                    <span class="gift-hint">¡Toca tu regalo sorpresa! ✨</span>
+                </div>
+
+                <div class="page-number">XVII / XVII</div>
+            </div>
+
+        </div>
+
+        <!-- SOBRE CON SELLO PERSONALIZADO -->
+        <div class="envelope">
+            <div class="fold-back"></div>
+            <div class="fold-left-right"></div>
+            <div class="fold-bottom"></div>
+            
+            <div class="seal-bottom" id="sealBtn" onclick="triggerSecretPopup(event)">
+                <span class="seal-text">S. G.</span>
+            </div>
+        </div>
+
+        <div class="flap-wrapper">
+            <div class="flap-front"></div>
+            
+            <div class="seal-top">
+                <span class="seal-text">F. L.</span>
+            </div>
+        </div>
+
+        <div class="tap" id="tapText">
+            Toca el sobre para abrirlo ✉️
+        </div>
+    </div>
+</div>
+
+<!-- POPUP DE MENSAJE SECRETO -->
+<div class="secret-popup" id="secretPopup" onclick="closeSecretPopup()">
+    <h4>Mensaje Secreto 🤫❤️</h4>
+    <p>P.D. Si descubriste este sello, es porque tu curiosidad es igual de linda que tu sonrisa. ¡Eres el amor de mi vida, Salma Neftalí!</p>
+</div>
+
+<!-- MODAL FOTO COMPLETA -->
+<div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+    <img id="modalImg" src="" alt="Foto ampliada">
+    <div class="photo-modal-caption" id="modalCaption"></div>
+</div>
+
+<!-- PANTALLA DE VIDEO -->
+<div class="video-screen" id="videoScreen">
+    <div class="video-box">
+        <h2>Un detalle para recordar... ✨</h2>
+        <div class="iframe-container">
+            <iframe
+                id="loveVideo"
+                src=""
+                title="Para mi amor ❤️"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <button class="back-button" onclick="closeVideo()">Volver a la carta ✉️</button>
+    </div>
+</div>
+
+<script>
+// 1. CÁLCULO DINÁMICO DEL TIEMPO JUNTOS
+function calculateTimeTogether() {
+    const startDate = new Date('2022-09-21T00:00:00');
+    const now = new Date();
+    
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    const diffTime = Math.abs(now - startDate);
+    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    const counterElem = document.getElementById('timeCounter');
+    if (counterElem) {
+        counterElem.innerHTML = `${years} años, ${months} meses y ${days} días<br><span style="font-size:14px; color:#57121c;">(${totalDays.toLocaleString()} días juntos)</span>`;
+    }
+}
+calculateTimeTogether();
+
+// 2. ELEMENTOS FLOTANTES DE FONDO
+const bgHearts = document.getElementById('bgHearts');
+
+for (let i = 0; i < 12; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerText = '❤';
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.animationDuration = `${9 + Math.random() * 6}s`;
+    heart.style.animationDelay = `${Math.random() * 5}s`;
+    heart.style.fontSize = `${12 + Math.random() * 14}px`;
+    bgHearts.appendChild(heart);
+}
+
+for (let i = 0; i < 10; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'falling-petal';
+    const size = 10 + Math.random() * 10;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size * 1.4}px`;
+    petal.style.left = `${Math.random() * 100}%`;
+    petal.style.animationDuration = `${8 + Math.random() * 7}s`;
+    petal.style.animationDelay = `${Math.random() * 6}s`;
+    bgHearts.appendChild(petal);
+}
+
+for (let i = 0; i < 20; i++) {
+    const dust = document.createElement('div');
+    dust.className = 'star-dust';
+    const size = 2 + Math.random() * 3;
+    dust.style.width = `${size}px`;
+    dust.style.height = `${size}px`;
+    dust.style.left = `${Math.random() * 100}%`;
+    dust.style.top = `${Math.random() * 100}%`;
+    dust.style.animationDuration = `${2 + Math.random() * 3}s`;
+    dust.style.animationDelay = `${Math.random() * 3}s`;
+    bgHearts.appendChild(dust);
+}
+
+// 3. EFECTOS MÁGICOS DE TOQUE
+function spawnInteractiveElement(x, y) {
+    const item = document.createElement('div');
+    item.className = 'interactive-item';
+    const isHeart = Math.random() > 0.4;
+    
+    if (isHeart) {
+        item.classList.add('interactive-heart');
+        item.innerText = Math.random() > 0.5 ? '❤' : '✨';
+    } else {
+        item.classList.add('interactive-petal');
+    }
+    
+    item.style.left = `${x}px`;
+    item.style.top = `${y}px`;
+    
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 40 + Math.random() * 60;
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance - 30;
+    const rot = (Math.random() - 0.5) * 360;
+    
+    item.style.setProperty('--dx', `${dx}px`);
+    item.style.setProperty('--dy', `${dy}px`);
+    item.style.setProperty('--rot', `${rot}deg`);
+    
+    document.body.appendChild(item);
+    setTimeout(() => item.remove(), 1200);
+}
+
+let lastSpawnTime = 0;
+function handlePointerMove(x, y) {
+    const now = Date.now();
+    if (now - lastSpawnTime > 50) {
+        spawnInteractiveElement(x, y);
+        lastSpawnTime = now;
+    }
+}
+
+window.addEventListener('mousemove', (e) => handlePointerMove(e.clientX, e.clientY));
+window.addEventListener('touchmove', (e) => {
+    if (e.touches[0]) handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: true });
+
+// CONTROL DE AUDIO
+const backgroundMusic = document.getElementById("backgroundMusic");
+const audioBtn = document.getElementById("audioBtn");
+let isPlaying = false;
+
+function toggleAudio(e) {
+    if (e) e.stopPropagation();
+    if (isPlaying) {
+        backgroundMusic.pause();
+        audioBtn.innerHTML = "🔇";
+        isPlaying = false;
+    } else {
+        backgroundMusic.play().catch(() => {});
+        audioBtn.innerHTML = "🎵";
+        isPlaying = true;
+    }
+}
+
+// ABRIR REGALO Y ACTIVAR VIDEO CON CONFETI
+function openGiftBox(e) {
+    if (e) e.stopPropagation();
+    
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#d4af37', '#8c2435', '#ffffff', '#ffb6c1']
+        });
+    }
+
+    setTimeout(() => {
+        showVideo();
+    }, 800);
+}
+
+function burstMagic(e) {
+    if (e) e.stopPropagation();
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            spawnInteractiveElement(
+                e.clientX + (Math.random() - 0.5) * 80, 
+                e.clientY + (Math.random() - 0.5) * 80
+            );
+        }, i * 30);
+    }
+}
+
+// MENSAJE SECRETO
+function triggerSecretPopup(e) {
+    if (e) e.stopPropagation();
+    document.getElementById("secretPopup").classList.add("active");
+}
+
+function closeSecretPopup() {
+    document.getElementById("secretPopup").classList.remove("active");
+}
+
+// NAVEGACIÓN SIMPLE MEDIANTE TOQUE + FLECHA RETROCESO
+const envelope = document.getElementById("envelope");
+const tapText = document.getElementById("tapText");
+const videoScreen = document.getElementById("videoScreen");
+const loveVideo = document.getElementById("loveVideo");
+const words = document.getElementById("words");
+const letters = document.querySelectorAll(".letter-page");
+const photoModal = document.getElementById("photoModal");
+const modalImg = document.getElementById("modalImg");
+const modalCaption = document.getElementById("modalCaption");
+const prevArrow = document.getElementById("prevArrow");
+const loveBubble = document.getElementById("loveBubble");
+
+const totalPages = letters.length;
+let state = 0; // 0: Cerrado, 1: Portada, 2..18: Páginas (1 a 17)
+
+function showLetter(index) {
+    letters.forEach(letter => letter.classList.remove("active"));
+    if (letters[index]) {
+        letters[index].classList.add("active");
+    }
+    
+    // Muestra u oculta la flecha de retroceso
+    if (index > 0) {
+        prevArrow.classList.add("show");
+    } else {
+        prevArrow.classList.remove("show");
+    }
+}
+
+function prevPage(e) {
+    if (e) e.stopPropagation();
+    if (state > 2) {
+        state--;
+        showLetter(state - 2);
+        tapText.innerHTML = "Toca para continuar 🌹";
+    } else if (state === 2) {
+        state = 1;
+        letters.forEach(letter => letter.classList.remove("active"));
+        words.classList.remove("hide");
+        prevArrow.classList.remove("show");
+        tapText.innerHTML = "Toca para comenzar a leer ✨";
+    }
+}
+
+function zoomPhoto(src, caption, event) {
+    if (event) event.stopPropagation();
+    modalImg.src = src;
+    modalCaption.innerText = caption;
+    photoModal.classList.add("active");
+}
+
+function closePhotoModal() {
+    photoModal.classList.remove("active");
+}
+
+// AVANZAR AL HACER CLIC EN EL SOBRE/CARTA
+envelope.addEventListener("click", function(e) {
+    if (photoModal.classList.contains("active")) return;
+    if (document.getElementById("secretPopup").classList.contains("active")) return;
+
+    if (state === 0) {
+        envelope.classList.add("open");
+        loveBubble.classList.remove("show");
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play().then(() => {
+            isPlaying = true;
+            audioBtn.innerHTML = "🎵";
+        }).catch(() => {});
+        tapText.innerHTML = "Toca para comenzar a leer ✨";
+        state = 1;
+    }
+    else if (state === 1) {
+        words.classList.add("hide");
+        showLetter(0);
+        tapText.innerHTML = "Toca para continuar 🌹";
+        state = 2;
+    }
+    else if (state >= 2 && state <= totalPages) {
+        showLetter(state - 1);
+        if (state === totalPages) {
+            tapText.innerHTML = "Toca la caja de regalo para abrir tu sorpresa 🎁✨";
+        } else {
+            tapText.innerHTML = "Toca para continuar 🌹";
+        }
+        state++;
+    }
+});
+
+function showVideo() {
+    backgroundMusic.pause();
+    isPlaying = false;
+    audioBtn.innerHTML = "🔇";
+    letters.forEach(letter => letter.classList.remove("active"));
+    loveVideo.src = "https://www.youtube.com/embed/uDTJMPmfJIM?autoplay=1&enablejsapi=1&rel=0";
+    videoScreen.classList.add("show");
+}
+
+function closeVideo() {
+    videoScreen.classList.add("closing");
+    
+    setTimeout(() => {
+        loveVideo.src = "";
+        videoScreen.classList.remove("show");
+        videoScreen.classList.remove("closing");
+        words.classList.remove("hide");
+        prevArrow.classList.remove("show");
+
+        setTimeout(() => {
+            envelope.classList.remove("open");
+            tapText.innerHTML = "Toca el sobre para abrirlo ✉️";
+            state = 0;
+            
+            // Aparece la burbuja mágica al terminar de cerrar el sobre
+            setTimeout(() => {
+                loveBubble.classList.add("show");
+            }, 800);
+
+        }, 600);
+    }, 400);
+}
+</script>
+
+</body>
+</html>
